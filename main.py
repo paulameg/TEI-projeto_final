@@ -33,6 +33,14 @@ def logout():
 def abre_tela_cadastro():
     tela_cadastro.show()
 
+def abre_sobre():
+    segunda_tela.close()
+    tela_sobre.show()
+
+def fecha_sobre():
+    tela_sobre.close()
+    segunda_tela.show()
+
 
 def cadastrar():
     nome = tela_cadastro.lineEdit.text()
@@ -57,19 +65,20 @@ def cadastrar():
         tela_cadastro.label.setText("As senhas digitadas estão diferentes")
     
 
-    
 
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
 segunda_tela = uic.loadUi("segunda_tela.ui")
 tela_cadastro = uic.loadUi("tela_cadastro.ui")
+tela_sobre = uic.loadUi("Sobre.ui")
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
 primeira_tela.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
 primeira_tela.pushButton_2.clicked.connect(abre_tela_cadastro)
 tela_cadastro.pushButton.clicked.connect(cadastrar) 
-
+segunda_tela.pushButton_2.clicked.connect(abre_sobre)
+tela_sobre.pushButton.clicked.connect(fecha_sobre)
 
 primeira_tela.show()
 app.exec()
