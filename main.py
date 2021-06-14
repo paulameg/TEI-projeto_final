@@ -64,6 +64,58 @@ def cadastrar():
     else:
         tela_cadastro.label.setText("As senhas digitadas estão diferentes")
     
+'''
+CREATE TABLE person_tbl
+(
+   first_name CHAR(20) NOT NULL,
+   last_name CHAR(20) NOT NULL,
+   sex CHAR(10),
+   PRIMARY KEY (last_name, first_name)
+);
+'''
+
+
+def cadastrar_cifra():
+    codigo = tela_cadastro_cifra.lineEdit.text()
+    titulo = tela_cadastro_cifra.lineEdit_2.text()
+    titulo_alt = tela_cadastro_cifra.lineEdit_3.text()
+    artista = tela_cadastro_cifra.lineEdit_5.text()
+    primeira_linha = tela_cadastro_cifra.lineEdit_6.text()
+    primeira_linha_ref = tela_cadastro_cifra.lineEdit_4.text()
+    tom = tela_cadastro_cifra.lineEdit_7.text()
+    pagina = tela_cadastro_cifra.lineEdit_8.text()
+
+    try:
+        banco1 = sqlite3.connect('cadastro_cifras.db')
+        cursor1 = banco1.cursor()
+        cursor1.execute("""CREATE TABLE IF NOT EXISTS cadastro_cifras(
+                            codigo integer PRIMARY KEY,
+                            titulo text,
+                            titulo_alt text,
+                            artista text,
+                            primeira_linha text,
+                            primeira_linha_ref text,
+                            tom text,
+                            pagina integer
+                            );""")
+        cursor1.execute("INSERT INTO cadastro_cifras VALUES ('"+codigo+"','"+titulo+"','"+titulo_alt+"','"+artista+"','"+primeira_linha+"','"+primeira_linha_ref+"','"+tom+"','"+pagina+"');")
+        banco1.commit() 
+        banco1.close()
+        tela_cadastro_cifra.label_10.setText("Cifra cadastrada com sucesso!")
+    
+    except sqlite3.Error as erro:
+        print("Erro ao inserir os dados: ",erro)
+        tela_cadastro_cifra.label_10.setText("Erro ao cadastrar a cifra!")
+
+def tela_cadastrar_cifra():
+    segunda_tela.close()
+    tela_cadastro_cifra.show()
+
+
+def fechar_cadastrar_cifra():    
+    tela_cadastro_cifra.close()
+    segunda_tela.show()
+
 
 
 
@@ -72,6 +124,8 @@ primeira_tela=uic.loadUi("primeira_tela.ui")
 segunda_tela = uic.loadUi("segunda_tela.ui")
 tela_cadastro = uic.loadUi("tela_cadastro.ui")
 tela_sobre = uic.loadUi("Sobre.ui")
+tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
+
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
 primeira_tela.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -79,6 +133,9 @@ primeira_tela.pushButton_2.clicked.connect(abre_tela_cadastro)
 tela_cadastro.pushButton.clicked.connect(cadastrar) 
 segunda_tela.pushButton_2.clicked.connect(abre_sobre)
 tela_sobre.pushButton.clicked.connect(fecha_sobre)
+segunda_tela.pushButton_3.clicked.connect(tela_cadastrar_cifra)
+tela_cadastro_cifra.pushButton.clicked.connect(fechar_cadastrar_cifra)
+tela_cadastro_cifra.pushButton_2.clicked.connect(cadastrar_cifra)
 
 primeira_tela.show()
 app.exec()
