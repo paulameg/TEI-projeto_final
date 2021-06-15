@@ -64,16 +64,6 @@ def cadastrar():
     else:
         tela_cadastro.label.setText("As senhas digitadas estão diferentes")
     
-'''
-CREATE TABLE person_tbl
-(
-   first_name CHAR(20) NOT NULL,
-   last_name CHAR(20) NOT NULL,
-   sex CHAR(10),
-   PRIMARY KEY (last_name, first_name)
-);
-'''
-
 
 def cadastrar_cifra():
     codigo = tela_cadastro_cifra.lineEdit.text()
@@ -98,6 +88,7 @@ def cadastrar_cifra():
                             tom text,
                             pagina integer
                             );""")
+                            
         cursor1.execute("INSERT INTO cadastro_cifras VALUES ('"+codigo+"','"+titulo+"','"+titulo_alt+"','"+artista+"','"+primeira_linha+"','"+primeira_linha_ref+"','"+tom+"','"+pagina+"');")
         banco1.commit() 
         banco1.close()
