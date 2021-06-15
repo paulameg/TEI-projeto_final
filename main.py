@@ -123,6 +123,10 @@ def consultar_cifra():
     
     banco2.close()
 
+def fechar_consulta_cifra():
+    tela_consultar_cifra.close()
+    segunda_tela.show
+
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
@@ -143,6 +147,7 @@ segunda_tela.pushButton_3.clicked.connect(tela_cadastrar_cifra)
 tela_cadastro_cifra.pushButton.clicked.connect(fechar_cadastrar_cifra)
 tela_cadastro_cifra.pushButton_2.clicked.connect(cadastrar_cifra)
 segunda_tela.pushButton_4.clicked.connect(consultar_cifra)
+tela_consultar_cifra.pushButton_2.clicked.connect(fechar_consulta_cifra)
 
 primeira_tela.show()
 app.exec()
