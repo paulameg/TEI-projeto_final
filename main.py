@@ -107,7 +107,21 @@ def fechar_cadastrar_cifra():
     tela_cadastro_cifra.close()
     segunda_tela.show()
 
+def consultar_cifra():
+    tela_consultar_cifra.show()
+    banco2 = sqlite3.connect('cadastro_cifras.db')
+    cursor = banco2.cursor()
+    cursor.execute("SELECT * FROM cadastro_cifras")
+    dados_lidos = cursor.fetchall()
+    tela_consultar_cifra.tableWidget.setRowCount(len(dados_lidos))
+    tela_consultar_cifra.tableWidget.setColumnCount(8)
 
+    for i in range(0, len(dados_lidos)):
+        for j in range(0, 8):
+            tela_consultar_cifra.tableWidget.setItem(i,j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+            #print(str(dados_lidos[i][j]))
+    
+    banco2.close()
 
 
 app=QtWidgets.QApplication([])
@@ -116,6 +130,7 @@ segunda_tela = uic.loadUi("segunda_tela.ui")
 tela_cadastro = uic.loadUi("tela_cadastro.ui")
 tela_sobre = uic.loadUi("Sobre.ui")
 tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
+tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -127,6 +142,7 @@ tela_sobre.pushButton.clicked.connect(fecha_sobre)
 segunda_tela.pushButton_3.clicked.connect(tela_cadastrar_cifra)
 tela_cadastro_cifra.pushButton.clicked.connect(fechar_cadastrar_cifra)
 tela_cadastro_cifra.pushButton_2.clicked.connect(cadastrar_cifra)
+segunda_tela.pushButton_4.clicked.connect(consultar_cifra)
 
 primeira_tela.show()
 app.exec()
