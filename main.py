@@ -44,6 +44,7 @@ def fecha_sobre():
 
 
 def cadastrar():
+    id = tela_cadastro.lineEdit_5.text()
     nome = tela_cadastro.lineEdit.text()
     login = tela_cadastro.lineEdit_2.text()
     senha = tela_cadastro.lineEdit_3.text()
@@ -53,8 +54,8 @@ def cadastrar():
         try:
             banco = sqlite3.connect('banco_cadastro.db') 
             cursor = banco.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (id integer PRIMARY KEY AUTOINCREMENT, nome text,login text,senha text)")
-            cursor.execute("INSERT INTO cadastro VALUES ('id','"+nome+"','"+login+"','"+senha+"')")
+            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (id integer PRIMARY KEY, nome text,login text,senha text)")
+            cursor.execute("INSERT INTO cadastro VALUES ('"+id+"','"+nome+"','"+login+"','"+senha+"')")
 
             banco.commit() 
             banco.close()
