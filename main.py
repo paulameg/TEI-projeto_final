@@ -1,6 +1,6 @@
 from PyQt5 import  uic,QtWidgets
 import sqlite3
-
+import os.path
 
 def chama_segunda_tela():
     primeira_tela.label_4.setText("")
@@ -182,6 +182,43 @@ def cadastrar_artista():
         print("Erro ao inserir os dados: ", erro)
         tela_cadastro_artista.label_8.setText("Erro ao cadastrar artista!")
 
+def consultar_artista():
+    segunda_tela.close()
+    tela_consultar_artista.show()
+    banco = sqlite3.connect('cadastro_artistas.db')
+    cursor = banco.cursor()
+    cursor.execute("SELECT * FROM cadastro_artistas")
+    dados_lidos = cursor.fetchall()
+    tela_consultar_artista.tableWidget.setRowCount(len(dados_lidos))
+    tela_consultar_artista.tableWidget.setColumnCount(6)
+
+    for i in range(0, len(dados_lidos)):
+        for j in range(0, 6):
+            tela_consultar_artista.tableWidget.setItem(i,j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+    banco.close()
+
+
+def excluir_artista():
+    linha = tela_consultar_artista.tableWidget.currentRow()
+    tela_consultar_artista.tableWidget.removeRow(linha)
+
+    banco = sqlite3.connect('cadastro_artistas.db')
+    cursor = banco.cursor()
+    cursor.execute("SELECT codigo FROM cadastro_artistas")
+    dados_lidos = cursor.fetchall()
+    valor_id = dados_lidos[linha][0]
+    cursor.execute("DELETE FROM cadastro_artistas WHERE codigo="+ str(valor_id))
+    banco.commit()
+    banco.close()
+
+def fechar_cadastrar_artista():
+    tela_cadastro_artista.close()
+    segunda_tela.show()
+
+def fechar_consultar_artista():
+    tela_consultar_artista.close()
+    segunda_tela.show()
+
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
 segunda_tela = uic.loadUi("segunda_tela.ui")
@@ -190,6 +227,7 @@ tela_sobre = uic.loadUi("Sobre.ui")
 tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
 tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
 tela_cadastro_artista = uic.loadUi("cadastro_artista.ui")
+tela_consultar_artista = uic.loadUi("listar_artistas.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -207,6 +245,10 @@ tela_consultar_cifra.pushButton_3.clicked.connect(excluir_cifra)
 tela_cadastro.pushButton_3.clicked.connect(fechar_cadastrar)
 segunda_tela.pushButton_5.clicked.connect(tela_cadastrar_artista)
 tela_cadastro_artista.pushButton_2.clicked.connect(cadastrar_artista)
+segunda_tela.pushButton_6.clicked.connect(consultar_artista)
+tela_consultar_artista.pushButton_3.clicked.connect(excluir_artista)
+tela_cadastro_artista.pushButton.clicked.connect(fechar_cadastrar_artista)
+tela_consultar_artista.pushButton_2.clicked.connect(fechar_consultar_artista)
 
 primeira_tela.show()
 app.exec()
