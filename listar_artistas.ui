@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>970</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -17,12 +17,28 @@
    <string notr="true">background-color: rgb(255, 206, 250);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>71</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 236);</string>
+    </property>
+    <property name="text">
+     <string>Voltar</string>
+    </property>
+   </widget>
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>60</x>
       <y>90</y>
-      <width>801</width>
+      <width>701</width>
       <height>351</height>
      </rect>
     </property>
@@ -39,12 +55,17 @@
     </column>
     <column>
      <property name="text">
-      <string>Título</string>
+      <string>Nome</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Título Alternativo</string>
+      <string>Idade</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Local de Nascimento</string>
      </property>
      <property name="font">
       <font>
@@ -54,56 +75,20 @@
     </column>
     <column>
      <property name="text">
-      <string>Artista</string>
+      <string>Música mais famosa</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>1ª Linha</string>
+      <string>Estilo Musical</string>
      </property>
     </column>
-    <column>
-     <property name="text">
-      <string>1ª Linha Refrão</string>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-      </font>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Tom</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Página</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>71</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(238, 238, 236);</string>
-    </property>
-    <property name="text">
-     <string>Voltar</string>
-    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>490</y>
+      <x>620</x>
+      <y>480</y>
       <width>151</width>
       <height>41</height>
      </rect>
@@ -112,15 +97,15 @@
      <string notr="true">background-color: rgb(238, 238, 236);</string>
     </property>
     <property name="text">
-     <string>Excluir Cifra</string>
+     <string>Excluir Artista</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>340</x>
       <y>20</y>
-      <width>101</width>
+      <width>141</width>
       <height>41</height>
      </rect>
     </property>
@@ -131,7 +116,7 @@
      </font>
     </property>
     <property name="text">
-     <string>CIFRAS</string>
+     <string>ARTISTAS</string>
     </property>
    </widget>
   </widget>
@@ -140,7 +125,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>970</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>

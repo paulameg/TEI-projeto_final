@@ -31,6 +31,7 @@ def logout():
     primeira_tela.show()
 
 def abre_tela_cadastro():
+    segunda_tela.close()
     tela_cadastro.show()
 
 def abre_sobre():
@@ -57,12 +58,12 @@ def cadastrar():
 
             banco.commit() 
             banco.close()
-            tela_cadastro.label.setText("Usuario cadastrado com sucesso")
+            tela_cadastro.label_6.setText("Usuario cadastrado com sucesso")
 
         except sqlite3.Error as erro:
             print("Erro ao inserir os dados: ",erro)
     else:
-        tela_cadastro.label.setText("As senhas digitadas estão diferentes")
+        tela_cadastro.label_6.setText("As senhas digitadas estão diferentes")
     
 
 def cadastrar_cifra():
@@ -108,6 +109,7 @@ def fechar_cadastrar_cifra():
     segunda_tela.show()
 
 def consultar_cifra():
+    segunda_tela.close()
     tela_consultar_cifra.show()
     banco2 = sqlite3.connect('cadastro_cifras.db')
     cursor = banco2.cursor()
@@ -125,7 +127,7 @@ def consultar_cifra():
 
 def fechar_consulta_cifra():
     tela_consultar_cifra.close()
-    segunda_tela.show
+    segunda_tela.show()
 
 def excluir_cifra():
     
@@ -142,7 +144,12 @@ def excluir_cifra():
     banco3.close()
 
     #print(valor_id)
-    
+
+def fechar_cadastrar():
+    tela_cadastro.close()
+    primeira_tela.show()
+
+
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
@@ -151,6 +158,7 @@ tela_cadastro = uic.loadUi("tela_cadastro.ui")
 tela_sobre = uic.loadUi("Sobre.ui")
 tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
 tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
+#tela_cadastrar_artista = uic.loadUi("cadastro_artista.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -165,6 +173,7 @@ tela_cadastro_cifra.pushButton_2.clicked.connect(cadastrar_cifra)
 segunda_tela.pushButton_4.clicked.connect(consultar_cifra)
 tela_consultar_cifra.pushButton_2.clicked.connect(fechar_consulta_cifra)
 tela_consultar_cifra.pushButton_3.clicked.connect(excluir_cifra)
+tela_cadastro.pushButton_3.clicked.connect(fechar_cadastrar)
 
 primeira_tela.show()
 app.exec()
