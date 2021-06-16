@@ -127,6 +127,22 @@ def fechar_consulta_cifra():
     tela_consultar_cifra.close()
     segunda_tela.show
 
+def excluir_cifra():
+    
+    linha = tela_consultar_cifra.tableWidget.currentRow()
+    tela_consultar_cifra.tableWidget.removeRow(linha)
+
+    banco3 = sqlite3.connect('cadastro_cifras.db')
+    cursor3 = banco3.cursor()
+    cursor3.execute("SELECT codigo FROM cadastro_cifras")
+    dados_lidos = cursor3.fetchall()
+    valor_id = dados_lidos[linha][0]
+    cursor3.execute("DELETE FROM cadastro_cifras WHERE codigo="+ str(valor_id))
+    banco3.commit()
+    banco3.close()
+
+    #print(valor_id)
+    
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
@@ -148,6 +164,7 @@ tela_cadastro_cifra.pushButton.clicked.connect(fechar_cadastrar_cifra)
 tela_cadastro_cifra.pushButton_2.clicked.connect(cadastrar_cifra)
 segunda_tela.pushButton_4.clicked.connect(consultar_cifra)
 tela_consultar_cifra.pushButton_2.clicked.connect(fechar_consulta_cifra)
+tela_consultar_cifra.pushButton_3.clicked.connect(excluir_cifra)
 
 primeira_tela.show()
 app.exec()
