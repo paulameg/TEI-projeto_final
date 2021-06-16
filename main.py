@@ -149,7 +149,38 @@ def fechar_cadastrar():
     tela_cadastro.close()
     primeira_tela.show()
 
+def tela_cadastrar_artista():
+    segunda_tela.close()
+    tela_cadastro_artista.show()
 
+def cadastrar_artista():
+    codigo1 = tela_cadastro_artista.lineEdit.text()
+    nome1 = tela_cadastro_artista.lineEdit_2.text()
+    idade1 = tela_cadastro_artista.lineEdit_3.text()
+    local_nasc1 = tela_cadastro_artista.lineEdit_4.text()
+    msc_famosa1 = tela_cadastro_artista.lineEdit_5.text()
+    estilo1 = tela_cadastro_artista.lineEdit_6.text()
+
+    try:
+        banco4 = sqlite3.connect('cadastro_artistas.db')
+        cursor4 = banco4.cursor()
+        cursor4.execute("""CREATE TABLE IF NOT EXISTS cadastro_artistas(
+                           codigo integer PRIMARY KEY,
+                           nome text,
+                           idade integer,
+                           local_nasc text,
+                           msc_famosa text,
+                           estilo text);""")
+    
+        cursor4.execute("INSERT INTO cadastro_artistas VALUES ('"+codigo1+"','"+nome1+"','"+idade1+"','"+local_nasc1+"','"+msc_famosa1+"','"+estilo1+"')")
+
+        banco4.commit()
+        banco4.close()
+        tela_cadastro_artista.label_8.setText("Artista cadastrado com sucesso!")
+    
+    except sqlite3.Error as erro:
+        print("Erro ao inserir os dados: ", erro)
+        tela_cadastro_artista.label_8.setText("Erro ao cadastrar artista!")
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
@@ -158,7 +189,7 @@ tela_cadastro = uic.loadUi("tela_cadastro.ui")
 tela_sobre = uic.loadUi("Sobre.ui")
 tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
 tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
-#tela_cadastrar_artista = uic.loadUi("cadastro_artista.ui")
+tela_cadastro_artista = uic.loadUi("cadastro_artista.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -174,6 +205,8 @@ segunda_tela.pushButton_4.clicked.connect(consultar_cifra)
 tela_consultar_cifra.pushButton_2.clicked.connect(fechar_consulta_cifra)
 tela_consultar_cifra.pushButton_3.clicked.connect(excluir_cifra)
 tela_cadastro.pushButton_3.clicked.connect(fechar_cadastrar)
+segunda_tela.pushButton_5.clicked.connect(tela_cadastrar_artista)
+tela_cadastro_artista.pushButton_2.clicked.connect(cadastrar_artista)
 
 primeira_tela.show()
 app.exec()
