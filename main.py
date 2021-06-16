@@ -53,8 +53,8 @@ def cadastrar():
         try:
             banco = sqlite3.connect('banco_cadastro.db') 
             cursor = banco.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (nome text,login text,senha text)")
-            cursor.execute("INSERT INTO cadastro VALUES ('"+nome+"','"+login+"','"+senha+"')")
+            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (id integer PRIMARY KEY AUTOINCREMENT, nome text,login text,senha text)")
+            cursor.execute("INSERT INTO cadastro VALUES ('id','"+nome+"','"+login+"','"+senha+"')")
 
             banco.commit() 
             banco.close()
@@ -219,6 +219,40 @@ def fechar_consultar_artista():
     tela_consultar_artista.close()
     segunda_tela.show()
 
+def consultar_usuarios():
+    segunda_tela.close()
+    tela_listar_usuarios.show()
+    banco = sqlite3.connect('banco_cadastro.db')
+    cursor = banco.cursor()
+    cursor.execute("SELECT * FROM cadastro")
+    dados_lidos = cursor.fetchall()
+    tela_listar_usuarios.tableWidget.setRowCount(len(dados_lidos))
+    tela_listar_usuarios.tableWidget.setColumnCount(3)
+
+    for i in range(0, len(dados_lidos)):
+        for j in range(0, 3):
+            tela_listar_usuarios.tableWidget.setItem(i,j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+            print(str(dados_lidos[i][j]))
+    banco.close()
+
+def fechar_listar_usuarios():
+    tela_listar_usuarios.close()
+    segunda_tela.show()
+
+def excluir_usuario():
+    linha = tela_listar_usuarios.tableWidget.currentRow()
+    tela_listar_usuarios.tableWidget.removeRow(linha)
+
+    banco = sqlite3.connect('banco_cadastro.db')
+    cursor = banco.cursor()
+    cursor.execute("SELECT id FROM cadastro")
+    dados_lidos = cursor.fetchall()
+    valor_id = dados_lidos[linha][0]
+    cursor.execute("DELETE FROM cadastro WHERE id="+ str(valor_id))
+    banco.commit()
+    banco.close()
+
+
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
 segunda_tela = uic.loadUi("segunda_tela.ui")
@@ -228,6 +262,7 @@ tela_cadastro_cifra = uic.loadUi("cadastro_cifra.ui")
 tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
 tela_cadastro_artista = uic.loadUi("cadastro_artista.ui")
 tela_consultar_artista = uic.loadUi("listar_artistas.ui")
+tela_listar_usuarios = uic.loadUi("listar_usuarios.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -249,6 +284,9 @@ segunda_tela.pushButton_6.clicked.connect(consultar_artista)
 tela_consultar_artista.pushButton_3.clicked.connect(excluir_artista)
 tela_cadastro_artista.pushButton.clicked.connect(fechar_cadastrar_artista)
 tela_consultar_artista.pushButton_2.clicked.connect(fechar_consultar_artista)
+segunda_tela.pushButton_7.clicked.connect(consultar_usuarios)
+tela_listar_usuarios.pushButton_2.clicked.connect(fechar_listar_usuarios)
+tela_listar_usuarios.pushButton_3.clicked.connect(excluir_usuario)
 
 primeira_tela.show()
 app.exec()
