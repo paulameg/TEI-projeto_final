@@ -253,6 +253,13 @@ def excluir_usuario():
     banco.commit()
     banco.close()
 
+def abrir_mais_sobre():
+    tela_sobre.close()
+    tela_mais.show()
+
+def fechar_mais_sobre():
+    tela_mais.close()
+    tela_sobre.show()
 
 app=QtWidgets.QApplication([])
 primeira_tela=uic.loadUi("primeira_tela.ui")
@@ -264,6 +271,7 @@ tela_consultar_cifra = uic.loadUi("listar_cifras.ui")
 tela_cadastro_artista = uic.loadUi("cadastro_artista.ui")
 tela_consultar_artista = uic.loadUi("listar_artistas.ui")
 tela_listar_usuarios = uic.loadUi("listar_usuarios.ui")
+tela_mais = uic.loadUi("mais_sobre.ui")
 
 primeira_tela.pushButton.clicked.connect(chama_segunda_tela)
 segunda_tela.pushButton.clicked.connect(logout)
@@ -288,6 +296,8 @@ tela_consultar_artista.pushButton_2.clicked.connect(fechar_consultar_artista)
 segunda_tela.pushButton_7.clicked.connect(consultar_usuarios)
 tela_listar_usuarios.pushButton_2.clicked.connect(fechar_listar_usuarios)
 tela_listar_usuarios.pushButton_3.clicked.connect(excluir_usuario)
+tela_sobre.pushButton_2.clicked.connect(abrir_mais_sobre)
+tela_mais.pushButton.clicked.connect(fechar_mais_sobre)
 
 primeira_tela.show()
 app.exec()
